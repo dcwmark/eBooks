@@ -1,0 +1,12 @@
+Create your own account:P:newuser.jsp
+Submit story/comment/hint:PL:submit.jsp
+My JabaDot:L:mysite.jsp
+Free EMail:L:mail.jsp
+Who's Around:L:whoson.jsp
+Chat Session:L:chat.jsp
+View Design Specs:L:designview.jsp
+About Site:P:about.jsp
+Download Source:L:download.jsp
+Legal Notice:P:legal.jsp
+Edit Stories:E:edit.jsp
+User Administration:A:admin.jsp

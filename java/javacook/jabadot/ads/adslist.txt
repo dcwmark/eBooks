@@ -1,0 +1,12 @@
+http://www.openbsd.org/|OpenBSD: Secure by default|openbsd.gif
+http://www.daemonnews.org/|Bringing BSD together|daemonnews-darcy.gif
+http://www.daemonnews.org/|Bringing BSD together|daemonnews-derwen.gif
+http://www.daemonnews.org/|Bringing BSD together|sourcewars.gif
+http://www.jboss.org/|EJB for Free|ejboss.gif
+http://www.jug.org/|Java Users Unite|jug-toronto.gif
+http://www.deadly.org/|OpenBSD updates|openbsd-journal.gif
+http://conferences.oreilly.com/|Open Source Conference|oreilly-javaconf.gif
+http://www.slashdot.org/|Slashdot - geeks news|slashdot.gif
+http://www.javaranch.com/|A friendly place for Java greenhorns|javaranch.gif
+http://www.darwinawards.com/|Keeping the gene pool up-to-date|darwinawards.gif
+http://www.pairowoodies.com/|A cool web design & hosting site|pairowoodies.gif

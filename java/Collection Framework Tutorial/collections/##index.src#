@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>
+Introduction to the Collections Framework
+</TITLE>
+  <META NAME="AUTHOR" CONTENT="MageLang Institute">
+  <META NAME="DESCRIPTION" CONTENT="Introduction to the Collections Framework">
+  <META NAME="KEYWORDS" CONTENT="Magelang, collections, framework, data">
+  <META NAME="OWNER" CONTENT="Editorial/JDC">
+  <META NAME="revision" CONTENT="@(#)index2.src	1.2 09/21/99  JDC">
+</HEAD>
+
+<!-- BODY-TEMPLATE -->
+<!-- PAGETOP-TEMPLATE -->
+<!-- NAVBAR-TEMPLATE -->
+
+<!-- START SUB-NAV -->
+
+<TR>
+  <TD><!-- INSERT SUB-NAV INFO -->
+  </TD>
+</TR>
+
+
+<!-- END SUB-NAV -->
+
+</TABLE>
+
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TR>
+<TD>
+
+<!-- Template Version 2.0 -->
+
+<!-- ================== -->
+<!-- Start Main Content -->
+<!-- ================== -->
+
+<FONT FACE="Verdana, Arial, Helvetica, sans-serif">
+
+<DIV ALIGN="RIGHT">
+  <H2>Introduction to the Collections Framework<BR>
+      <FONT SIZE="4">About This Short Course</FONT></H2>
+  <H3><EM>By 
+  <A HREF="http://www.magelang.com/jdc">MageLang Institute</A></EM></H3>
+  <FONT SIZE="-1">
+ [<A HREF="Collection.html">Short Course</A>|
+  <A HREF="magecontents.html">Magercises</A>]
+  </FONT>
+  </DIV>
+
+
+<!-- end header -->
+
+<p>The Java Developer Connection<font size="1"><sup>SM</sup></font> (JDC) presents a Short Course on the Collections Framework written by Java<font size="1"><sup>TM</sup></font> Software licensee, the MageLang Institute. A leading provider of Java technology training, MageLang has contributed regularly to the JDC since 1996.</p><p>The MageLang Institute, since its founding in 1995, has been dedicated to promoting the growth of the Java technology community by providing excellent education and acting as an independent resource. To find out more about MageLang's Java technology training, visit the MageLang <a href="http://www.magelang.com/jdc">web site</a>.</p><p>In working through this Short Course and the accompanying  magercises you will learn to use the Collections Framework to store and manipulate groups of data as a single unit, a collection. Topics include a discussion and demonstration of 
+many of the abstract data types familiar from computer science data structure curriculum: maps, sets, lists, trees, arrays, hashtables, and other collections. In addition, the courseware includes coverage of the data structures and algorithms associated with these abstractions.</p><br>
+<h4>Objectives</h3>
+<p>By the end of this short course the student will be able to perform the following tasks:</p><ul>
+  <li>Know the mathematical meaning of set, map, and collection</li>
+  <li>Understand the key six interfaces of the Collections Framework</li>
+  <li>Know how to use the concrete collection implementations</li>
+  <li>Know how to apply sorting and searching through collections</li>
+  <li>Know how and when to use read-only and thread-safe collections</li>
+</ul><p><font size="4"><strong>Prerequisites</strong></font></p><p>A general familiarity with the Java programming language. If you are not familiar with these capabilities, see the <a href="http://java.sun.com/docs/books/tutorial/">Java Tutorial</a>. While the course uses things like the JFC&#153;/Swing component set and reading from a socket connection, it is not necessary to understand these capabilities.</p><p><font size="4"><strong>About the Author</strong></font></p><p>John Zukowski is a Software Mage with MageLang Institute. He is the author of <em>John Zukowski's Definitive Guide to Swing for Java 2</em> and <em>Mastering Java 2</em>, as well as many other technical publications and articles. He serves on the Senior Advisory Board at <a href="http://www.javaworld.com">JavaWorld</a> and as the <a href="http://java.about.com">Focus on Java</a> guide at About.com.</p><br>
+<br>
+<a href="Collection.html"><h3>Start the Short Course</h3></a>
+<br>
+<!-- begin footer -->
+
+<P>
+<FONT SIZE="-1">
+Copyright &copy; 1999 
+<A HREF="http://www.magelang.com/jdc">MageLang Institute</A>.
+All Rights Reserved.
+</FONT>
+
+
+
+</FONT>
+
+<!-- ================ -->
+<!-- End Main Content -->
+<!-- ================ -->
+
+</TD>
+</TR>
+</TABLE>
+
+<!-- COPYRIGHT-TEMPLATE -->
+
+</BODY>
+</HTML>

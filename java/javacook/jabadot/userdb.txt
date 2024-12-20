@@ -1,0 +1,10 @@
+#name:passwd:fullname:email:City:Prov:Country:privs
+#
+# This is NOT in use now. It is left here as an artifact,
+# in case anybody wants to try using the ancient and unsupported
+# UserDBText.java version of the User object (this file is written
+# up in The Java Cookbook, so it has to stay around for the long haul).
+#
+iadmin:gorpless:JabaDot Administrator:ian@darwinsys.com:Toronto:ON:CA:A
+joe:joeless:Joe User:joe@erewhon.com:Anytown:CA:US:-
+ian:inforless:Ian Darwin:ian@darwinsys.com:Toronto:ON:Canada:E

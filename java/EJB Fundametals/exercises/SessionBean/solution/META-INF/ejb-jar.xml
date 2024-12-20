@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 1.1//EN" "http://java.sun.com/j2ee/dtds/ejb-jar_1_1.dtd">
+
+<ejb-jar>
+  <display-name>InventoryEJB</display-name>
+  <enterprise-beans>
+    <session>
+      <description>Models an Inventory of MusicCDs</description>
+      <ejb-name>InventoryBean</ejb-name>
+      <home>musicstore.InventoryHome</home>
+      <remote>musicstore.Inventory</remote>
+      <ejb-class>musicstore.InventoryBean</ejb-class>
+      <session-type>Stateless</session-type>
+      <transaction-type>Container</transaction-type>
+      <ejb-ref>
+          <ejb-ref-name>ejb/MusicCD</ejb-ref-name>
+          <ejb-ref-type>Entity</ejb-ref-type>
+          <home>musicstore.MusicCDHome</home>
+          <remote>musicstore.MusicCD</remote>
+      </ejb-ref>
+    </session>
+  </enterprise-beans>
+
+  <assembly-descriptor>
+    <container-transaction>
+      <method>
+        <ejb-name>InventoryBean</ejb-name>
+        <method-name>*</method-name>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+  </assembly-descriptor>
+</ejb-jar>

@@ -1,0 +1,49 @@
+JabaDOT - Still lots to do!
+
+Consistent start of JSP pages:
+	<%@ import...
+	$Id: TODO.txt,v 1.19 2001/12/25 20:47:44 ian Exp $
+	Get session.
+	<html, body, with appropriate style tag, from session->user->skins>
+
+Rationalize jabadot.email.receive in initparams vs jabadot.mail.xxx in session
+
+Write edit1.jsp. Display using same form as submit.jsp, but with
+	Accept/Reject buttons instead of submit (reuse by include).
+
+MyJabaDot
+	- make it use same form as newuser.jsp, so you can change ANY field
+	- require password for any changes.
+
+Finish CSS for "skins"
+
+JDConstants
+	To persist beyong a "RELOAD!!" in Tomcat:
+		have "header.html" jsp:include servlet/JDConstants
+		which won't do any output, but will check for p==null
+		and, if so, ctx.getAttr("jabadot.dir"), then reloadProps()
+
+Data Modelling:
+	Database table for stories. State=submitted, approved, removed.
+	Submit Story: save to DBMS in finished format, instead of text file.
+
+Then Revise Search to search on subject, date, etc., using Lucene
+
+News:
+	import RSS - Meerkat?
+	Export RSS - RSS servlet using ForCurrentNews jsp tag? J+X p 400
+
+
+Change "User" to an EJB, with create(), create(...), findByName,
+	set methods, and findAllUsers. Use CMP and the "missing WHERE clause".
+	Build with J2EE deploytool.
+
+Missing Functionality
+	Submit Bug Report
+	Edit operation JSP to move from q to articles
+	
+View:
+	More JSP Tag Library to reduce Java clutter in HTML
+
+Go through and put encodeURL() around all generate URLs, for those
+	who really & truly can't stand cookies (they prefer bread?).

@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+
+<!-- Hand-prepared XML describing this web application.
+  ** $Id: web.xml,v 1.8 2001/12/25 20:47:45 ian Exp $
+  -->
+
+<!DOCTYPE web-app PUBLIC 
+	"-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
+	"http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
+
+<web-app>
+
+    <display-name>JabaDot, The all-Java News Portal
+	</display-name>
+    <description>
+      This is version 0.1 of JabaDot, a SlashDot-like news application 
+      based entirely on Servlets, JSP pages and custom tag definitions.  
+	  JabaDot was written by Ian Darwin (ian@darwinsys.com).
+    </description>
+
+	<!-- There are a LOT of context-params. PLEASE READ THIS OVER
+	  ** when installing your JabaDot site.
+	  -->
+    <context-param>
+      <param-name>jabadot.dir</param-name>
+      <param-value>/home/ian/src/jabadot</param-value>
+      <description>
+        The directory in which the JabaDot application is actually stored.
+		(full pathname required).
+      </description>
+    </context-param>
+
+	<!-- How to find the jabadot database (jabadb) -->
+	<context-param><param-name>jabadot.jabadb.driver</param-name>
+		<param-value>jdbc.idbDriver</param-value>
+		<description>
+			This is the JDBC driver named used to contact the jabadb.
+		</description>
+	</context-param>
+	<context-param><param-name>jabadot.jabadb.url</param-name>
+		<param-value>jdbc:idb:$DIR/jabadb.prp</param-value>
+		<description>
+			The JDBC URL used to contact the jabadb.
+		</description>
+	</context-param>
+	<context-param><param-name>jabadot.jabadb.user</param-name>
+		<param-value>www</param-value>
+		<description>
+			The user name to login to the database.
+			May or may not be the same as the OS-level user running httpd/tomcat.
+		</description>
+	</context-param>
+	<context-param><param-name>jabadot.jabadb.password</param-name>
+		<param-value></param-value>
+		<description>
+			The password accompanying jabadot.jabadb.user (may be null).
+		</description>
+	</context-param>
+
+	<!-- The top level directory for everything -->
+	<context-param><param-name>jabadot.dir.web</param-name>
+		<param-value>$DIR/</param-value>
+	</context-param>
+
+	<!-- The default directory for ads -->
+	<context-param><param-name>jabadot.dir.ads</param-name>
+		<param-value>$DIR/ads/</param-value>
+	</context-param>
+
+	<!-- The default ad list name */ -->
+	<context-param><param-name>jabadot.ads_def_list</param-name>
+		<param-value>adslist.txt</param-value>
+	</context-param>
+
+	<!-- The URL prefix for ads (usually the last component of jabadot.dir.ads) */ -->
+	<context-param><param-name>jabadot.ads_url_prefix</param-name>
+		<param-value>/jabadot/ads/</param-value>
+	</context-param>
+
+	<context-param><param-name>jabadot.articles_dir</param-name>
+		<param-value>$DIR/articles/</param-value>
+	</context-param>
+
+	<!-- temp directory for creating showable files. 
+	# MUST BE INSIDE $DIR -->
+	<context-param><param-name>jabadot.tmp_links_dir</param-name>
+		<param-value>$DIR/tmp/</param-value>
+	</context-param>
+
+	<!-- temp directory for creating news articles
+	# MUST BE INSIDE $DIR -->
+	<context-param><param-name>jabadot.queue_dir</param-name>
+		<param-value>$DIR/q</param-value>
+	</context-param>
+
+	<!-- EMail constants -->
+	<!-- outgoing mail server -->
+	<context-param><param-name>jabadot.mail.server.smtp</param-name>
+		<param-value>server.ltree</param-value>
+	</context-param>
+
+	<!-- Email addresses for mail sent and received BY THE SYSTEM -->
+	<context-param><param-name>jabadot.mail_from</param-name>
+		<param-value>jabadot@daroad.darwinsys.com</param-value>
+	</context-param>
+	<context-param><param-name>jabadot.mail_comments_to</param-name>
+		<param-value>jabadot@darwinsys.com</param-value>
+	</context-param>
+
+	<!-- Email properties for email sent and receive BY THE USER
+	# Sending -->
+	<context-param><param-name>jabadot.email.fromaddress</param-name>
+		<param-value>ian@darwinsys.com</param-value>
+	</context-param>
+	<context-param><param-name>jabadot.email.sendhost</param-name>
+		<param-value>server.ltree</param-value>
+	</context-param>
+
+	<!-- Values for receiving. -->
+	<context-param><param-name>jabadot.email.receive.host</param-name>
+		<param-value>localhost</param-value>
+	</context-param>
+	<context-param><param-name>jabadot.email.receive.protocol</param-name>
+		<param-value>pop3</param-value>
+	</context-param>
+	<context-param><param-name>jabadot.email.receive.root</param-name>
+		<param-value>INBOX</param-value>
+	</context-param>
+
+    <!-- Servlet definitions 
+    -->
+    <servlet>
+		<!-- JDConstants: not a real servlet but must be preloaded. -->
+        <servlet-name>JDConstants</servlet-name>
+        <servlet-class>jabadot.JDConstants</servlet-class>
+		<load-on-startup>10</load-on-startup>	<!-- 1 = first priority -->
+    </servlet>
+	<servlet>
+		<!-- index.jsp should then be compiled, if necessary, at startup. -->
+        <servlet-name>index.jsp</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+		<load-on-startup>20</load-on-startup>	<!-- 1 = first priority -->
+    </servlet>
+    <servlet>
+        <servlet-name>AdServlet</servlet-name>
+        <servlet-class>jabadot.AdServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EvalServlet</servlet-name>
+        <servlet-class>jabadot.EvalServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MailServlet</servlet-name>
+        <servlet-class>jabadot.MailServlet</servlet-class>
+    </servlet>
+
+	<!-- DO NOT USE THIS SERVLET ON A LIVE MACHINE - - BYE BYE USER 
+	 **  DATABASE, BYE BYE ADMIN PASSWORD. GET IT?
+	<servlet>
+		<servlet-name>RawSQLServlet</servlet-name>
+        <servlet-class>jabadot.RawSQLServlet</servlet-class>
+    </servlet>
+	-->
+
+    <servlet-mapping>
+        <servlet-name>AdServlet</servlet-name>
+        <url-pattern>/jabadot/AdServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>MailServlet</servlet-name>
+        <url-pattern>MailServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>EvalServlet</servlet-name>
+        <url-pattern>/jabadot/EvalServlet</url-pattern>
+    </servlet-mapping>
+
+	<!-- DO NOT USE ** see comments above.
+    <servlet-mapping>
+        <servlet-name>RawSQLServlet</servlet-name>
+        <url-pattern>/jabadot/RawSQLServlet</url-pattern>
+    </servlet-mapping>
+	-->
+
+    <!-- Welcome page - default is index.jsp
+     -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<!-- Error pages -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/errors/404.jsp</location>
+	</error-page>
+	
+    <!-- Custom Tag Library definitions 
+    -->
+	<taglib>
+		<taglib-uri>/jabatags</taglib-uri>
+		<taglib-location>/WEB-INF/jabadot.tld</taglib-location>
+	</taglib>
+
+</web-app>

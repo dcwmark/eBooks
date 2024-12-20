@@ -1,0 +1,18 @@
+This will be designed and coded by brute force.
+
+httpsession will contain a webmailsession object
+
+web.xml parameters:
+	mail_protocol (pop3, mbox, imap)
+	mail_provider (class name)
+
+ListServlet
+	gets a list of Messages
+	--> lister.jsp to display them
+
+SendServlet
+	called from reply.html and compose.html
+
+DeleteServlet
+
+Eventually consider using Virtual Domain feature of popa3d (when it's stable).

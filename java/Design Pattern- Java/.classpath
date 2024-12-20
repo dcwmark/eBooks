@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Adapter"/>
+	<classpathentry kind="src" path="Bridge"/>
+	<classpathentry kind="src" path="ChainOfResp"/>
+	<classpathentry kind="src" path="Command/actionCommand"/>
+	<classpathentry kind="src" path="Command/baseCommand"/>
+	<classpathentry kind="src" path="Command/commandObject"/>
+	<classpathentry kind="src" path="Command/externalCommand"/>
+	<classpathentry kind="src" path="Command/innerCommand"/>
+	<classpathentry kind="src" path="Composite"/>
+	<classpathentry kind="src" path="Decorator"/>
+	<classpathentry kind="src" path="Facade"/>
+	<classpathentry kind="src" path="Flyweight"/>
+	<classpathentry kind="src" path="Gardener"/>
+	<classpathentry kind="src" path="Interpreter"/>
+	<classpathentry kind="src" path="Iterator"/>
+	<classpathentry kind="src" path="Mediator"/>
+	<classpathentry kind="src" path="Memento"/>
+	<classpathentry kind="src" path="Prototype"/>
+	<classpathentry kind="src" path="Proxy"/>
+	<classpathentry kind="src" path="Singleton"/>
+	<classpathentry kind="src" path="State"/>
+	<classpathentry kind="src" path="Strategy"/>
+	<classpathentry kind="src" path="Swing/Buttons"/>
+	<classpathentry kind="src" path="Swing/JList"/>
+	<classpathentry kind="src" path="Swing/Menu"/>
+	<classpathentry kind="src" path="Swing/Simple"/>
+	<classpathentry kind="src" path="Swing/Table"/>
+	<classpathentry kind="src" path="Swing/Tree"/>
+	<classpathentry kind="src" path="Template"/>
+	<classpathentry kind="src" path="Visitor"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="Visitor"/>
+</classpath>

@@ -1,0 +1,23 @@
+<%@page errorPage="oops.jsp"%>
+<!-- 
+  -- $Id: TEMPLATE_jsp.txt,v 1.8 2000/12/03 00:45:23 ian Exp $
+  -->
+<HTML>
+<jsp:include page="header.html" flush="true"/>
+<P ALIGN=CENTER><jsp:include page="/servlet/AdServlet" flush="true"/></P>
+<%
+	User user = (User)session.getAttribute("jabadot.login");
+	if (user == null) {
+ %>
+<TITLE>You must be logged on!</TITLE>
+<BODY BGCOLOR="white">
+<H1>You must be logged on!</H1>
+<P>The service you are requesting requires that you be logged in to our site.
+Please go <a href="/jabadot/">back</a> and try again.  Thank you!
+<%	return;
+	}
+ // ELSE YOU'RE LOGGED IN...
+ %>
+<TITLE>Welcome to XXX!</TITLE>
+<BODY BGCOLOR="white">
+<H1>XXX</H1>

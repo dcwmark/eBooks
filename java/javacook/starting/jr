@@ -1,0 +1,18 @@
+#!/bin/sh -f
+
+# jr -- javac and run
+
+JAVAC=javac
+if [ -x /usr/local/bin/jikes ]; then
+	JAVAC="jikes +E"
+fi
+
+case $# in
+	0)	echo "Usage: $0 class"
+		exit 1
+		;;
+esac
+
+set -x
+
+${JAVAC} -d . $1.java && java $@

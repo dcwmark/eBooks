@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<!-- Hand-prepared XML Tag Library Definitions
+  ** $Id: jabadot.tld,v 1.3 2001/03/25 19:30:56 ian Exp $
+  -->
+
+<!DOCTYPE taglib PUBLIC 
+	"-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+	"http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+	<tlibversion>1.0</tlibversion>
+	<shortname>jabadot</shortname>
+
+	<!-- Iterate over all users -->
+	<tag>
+		<name>forAllUsers</name>
+		<tagclass>jabadot.ForAllUsers</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>element</name>
+			<required>true</required>
+		</attribute>
+	</tag>
+
+	<!-- Iterate over all current articles -->
+	<tag>
+		<name>forAllArticles</name>
+		<tagclass>jabadot.ForAllArticles</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>element</name>
+			<required>true</required>
+		</attribute>
+	</tag>
+</taglib>

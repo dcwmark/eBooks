@@ -1,0 +1,9 @@
+#!/bin/sh -f
+
+set -x
+
+export CLASSPATH="$CLASSPATH:`pwd`"
+
+cd ..
+
+java MkIndex # program overwrites index-byname.html

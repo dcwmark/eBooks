@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 1.1//EN" "http://java.sun.com/j2ee/dtds/ejb-jar_1_1.dtd">
+
+<ejb-jar>
+  <display-name>MusicCDEJB</display-name>
+  <enterprise-beans>
+    <entity>
+      <description>Models a MusicCD</description>
+      <ejb-name>MusicCDBean</ejb-name>
+      <home>musicstore.MusicCDHome</home>
+      <remote>musicstore.MusicCD</remote>
+      <ejb-class>musicstore.MusicCDBean</ejb-class>
+      <persistence-type>Container</persistence-type>
+      <prim-key-class>java.lang.String</prim-key-class>
+      <reentrant>False</reentrant>
+
+      <cmp-field><field-name>upc</field-name></cmp-field>
+      <cmp-field><field-name>title</field-name></cmp-field>
+      <cmp-field><field-name>artist</field-name></cmp-field>
+      <cmp-field><field-name>type</field-name></cmp-field>
+      <cmp-field><field-name>price</field-name></cmp-field>
+    </entity>
+  </enterprise-beans>
+
+  <assembly-descriptor>
+    <container-transaction>
+      <method>
+        <ejb-name>MusicCDBean</ejb-name>
+        <method-name>*</method-name>
+      </method>
+      <trans-attribute>Required</trans-attribute>
+    </container-transaction>
+  </assembly-descriptor>
+</ejb-jar>
