@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="c1"/>
+	<classpathentry excluding="js/" kind="src" path="c10"/>
+	<classpathentry kind="src" path="c10/js"/>
+	<classpathentry kind="src" path="c11"/>
+	<classpathentry kind="src" path="c12/app2"/>
+	<classpathentry excluding="jquery.mobile/" kind="src" path="c13"/>
+	<classpathentry kind="src" path="c13/jquery.mobile"/>
+	<classpathentry kind="src" path="c8"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

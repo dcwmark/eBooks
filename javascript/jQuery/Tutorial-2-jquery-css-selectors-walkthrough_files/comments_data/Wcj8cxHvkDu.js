@@ -1,0 +1,5 @@
+/*1330961952,176832697*/
+
+if (window.CavalryLogger) { CavalryLogger.start_js(["SOaaz"]); }
+
+function link_rel_preload(){var a=/async(?:-post)?|dialog(?:-pipe|-post)?|theater|toggle/;document.documentElement.onmousedown=function(b){b=b||window.event;var c=b.target||b.srcElement,d=Parent.byTag(c,'A');if(!d)return;var e=d.getAttribute('ajaxify'),f=d.href,g=e||f;if(e&&f&&!(/#$/).test(f)){var h=b.which&&b.which!=1,i=b.altKey||b.ctrlKey||b.metaKey||b.shiftKey;if(h||i)return;}var j=d.rel&&d.rel.match(a);j=j&&j[0];switch(j){case 'dialog':case 'dialog-post':Bootloader.loadComponents('dialog');break;case 'dialog-pipe':Bootloader.loadComponents(['ajaxpipe','dialog']);break;case 'async':case 'async-post':Bootloader.loadComponents('async');break;case 'theater':Bootloader.loadComponents('PhotoSnowlift',function(){PhotoSnowlift.preload(g,d);});break;case 'toggle':Bootloader.loadComponents('Toggler');break;}return;};}

@@ -1,0 +1,5 @@
+/*1330318878,169775559*/
+
+if (window.CavalryLogger) { CavalryLogger.start_js(["H7i0F"]); }
+
+__e("OptionStorage",["json","copyProperties"],function(a,b,c,d,e,f){b('json');var g=b('copyProperties'),h=window.localStorage||null;function i(j,k,l){this.name=j;this.reviver=k||this._reviver;this.replacer=l||this._replacer;this._read();}g(i.prototype,{_read:function(j,k){if(h&&h[this.name]){this.options=JSON.parse(h[this.name],this.reviver);}else this.options={};},_write:function(){if(h){var j=g({},this.options);h[this.name]=JSON.stringify(j,this.replacer);}},_reviver:function(j,k){if(k){var l=/^\[RegExp (.*)\]$/.test(k)&&RegExp.$1;if(l)k=new RegExp(l.replace(/^\/|\/$/g,''));return k;}},_replacer:function(j,k){if(k instanceof RegExp){k='[RegExp '+k+']';this[j]=k;}return k;},get:function(j,k){return j in this.options?this.options[j]:k;},set:function(j,k){if(k==null){delete this.options[j];}else this.options[j]=k;this._write();}});e.exports=i;});
