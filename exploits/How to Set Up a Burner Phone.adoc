@@ -1,0 +1,71 @@
+== How to Set Up a Burner Phone
+
+Authorities around the world can use your cell phone to track your location and potentially access other sensitive private information about you. One possible protection from this data collection is a burner phone. As invasive state surveillance ramps up globally—including new initiatives in the United States to monitor travelers, protesters, and vulnerable populations—privacy tools that were formerly the domain of digital hermits and people involved in organized crime are now more and more appealing to everyone.
+
+Burner phones, which are often “dumb” flip phones, can be loaded with prepaid minutes and offer anonymity when rotated frequently, purchased with cash, and siloed from any connections to you or your digital life. The idea is that cops, or other actors, are unlikely to be tracking a fresh burner phone in real time. But the crucial additional layer of protection that properly used burner phones offer is that even if they are—or they later tie communications from a burner phone to activity they are investigating—they can’t use digital ties to establish who was using it.
+
+“Burner phones are used for a very specific, time-limited purpose and then discarded,” says Danacea Vo, founder of Cyberlixir, a cybersecurity provider for nonprofits and vulnerable communities. “They’re mostly used to separate your identity from the identity of the device. Anonymity is the goal.”
+
+Using a burner phone may seem like overkill, and it takes money, time, and some know-how to actually use them effectively. But once you understand the concepts, you can apply them to your specific situation to make more informed choices about how to best protect yourself and your privacy. This guide talks about burner phones that meet the strict definition, as well as “alternative” phones, or altphones, that apply many of the same concepts of burner phones but don’t offer the same degree of anonymity.
+
+=== Assessing Your Risks
+
+Whether you should be using a burner phone depends on your risk model—the factors and concerns that are specific to you. Every one of us is exposed to a different set of risks that can vary depending on your nationality, citizenship, political views, profession, and much more. For example, lawyers, activists, and journalists may be at higher risk of being targeted by authoritarian governments than, say, an electrician or a stay-at-home mom.
+
+Your risk level and tolerance changes over time—possibly even from one day to the next—and this influences how you communicate with people and the devices you use to do so. When considering using a burner device, think about who you are trying to keep from getting your data or communications.
+
+“Use cases for burners may include: crossing borders, traveling to a risky environment, or participating in or documenting a protest,” says Mohammed Al-Maskati, digital security helpline director at the rights group Access Now. “People should make these decisions based on their risk profile and the threats they feasibly face.”
+
+Even if you conclude that using a true burner phone is right for you in certain situations, keep in mind that you can, and should, still use your regular devices for the vast majority of your digital activity. Unless you are actively hiding your existence or residence, you likely do not need to regularly use burner phones. And that’s a good thing, because taking the precautions required to establish the anonymity needed to maintain a device as a true burner phone—even for just one day—is challenging.
+
+“Burner phones are almost impossible to keep anonymous,” says Rebecca Williams, a senior strategist for the American Civil Liberties Union’s privacy and data governance unit, who recently organized a community burner phone workshop in Brooklyn, New York. “No burner phone is perfect.”
+
+=== Setting Up a Burner Phone
+
+The hardest—and arguably the most critical—aspect of setting up a burner phone is purchasing the device and corresponding prepaid service in a way that preserves your anonymity. It’s not a burner phone, for example, if you purchased it with your credit card, your best friend’s credit card, or your neighbor’s credit card.
+
+So purchase your burner with cash or consider using a prepaid debit card that you previously purchased with cash. Depending on where you’re shopping for your burner phone, these transactions may blend in a bit more than a cash purchase. Keep in mind, though, that for the latter to work you also have to take steps to shield your identity when purchasing the debit card.
+
+Ideally, authorities or other actors will never discover the activity of your burner phone; but realistically, you need to be operating under the assumption that they eventually will. That is the point at which the separation between your identity and the burner phone is tested. But even if you can’t perfectly shield yourself, you can make it more difficult to establish a connection.
+
+Every step in traveling to and from the purchase requires the same forethought as buying the phone itself. First, leave your personal phone or any other devices that connect to Wi-Fi or cell service at home. Wear a hat, mask, and generic, unmarked clothing to travel and purchase the device. Make sure to cover identifying features like tattoos. Also, remember not to use a car connected to you or anyone you know to get there since license plate readers and data collected by a vehicle could reveal your travels. Paying for public transit with a credit card or taking a rideshare ride through your personal account could also create a link, particularly if you are planning to buy your device in a low-traffic area, so plan your travel carefully.
+
+You should buy the device in a location where you don’t normally shop or visit. Keep in mind, too, that almost all mainstream electronics retailers and big box stores implement extensive surveillance that includes security cameras, but also potentially things like facial recognition scanning. Your mask and neutral clothing can help, but if you can find an independently owned store that sells prepaid phones and may not be monetizing customer data as aggressively as a big company, there may be fewer surveillance records capturing the transaction.
+
+If you’re contemplating having someone else buy the burner device for you, consider a couple of things. First, having them purchase the phone for you potentially involves them in whatever you’re planning to do with the phone, even if they are otherwise completely unconnected to the activity. Relatedly, you may think that no one knows that you’re pals with, say, certain customers you see regularly at your job or an acquaintance from your gym—but if someone is going to all the trouble of tracking your burner phone in a massive haystack of cell phone data, they can potentially figure out your connections to your decoy.
+
+“A good thing about burner phones is they can serve a purpose without compromising a wider network, for example your family. Using one reduces risk not just for the individual, but for the group,” says Cyberlixir’s Vo. “They reduce the risk of association.”
+
+In the United States you do not need to show identification or any other documentation to purchase a prepaid phone or SIM card, though some other countries record identity information alongside purchases. Many prepaid cell phones do require activation and a certain amount of setup that salespeople may offer to help you with on the spot. Wait to do the setup later, though.
+
+In books, movies, and television, burner phones are often depicted as old-school flip phones, and this type of phone is a convenient choice because their feature set is so limited, leaving less room for mistakes that could potentially expose your identity. A prepaid smartphone package or Wi-Fi-only device newly purchased with cash can also be a burner phone—but you should only log into purpose-made burner accounts and only use the burner phone on highly trafficked public Wi-Fi. Never join your home Wi-Fi or any other Wi-Fi that could reveal your everyday habits or movements, because this would leave digital breadcrumbs tied to your identity that are routinely used in law enforcement investigations.
+
+=== Using a Burner Phone
+
+Do not turn on the burner phone at all until you are about to use it for its limited duration purpose. Remember that the first time you turn on a cell phone and it connects to the network, the mobile provider starts getting location data based on which cell tower the phone is connected to.
+
+“Do not power the phone on near your home, work, or usual hangouts,” Cyberlixir’s Vo says. “Activate and test the phone somewhere far away, preferably in a crowded or busy area where you blend in.”
+
+Keep the phone off and ideally in a https://www.wired.com/story/the-physics-of-faraday-cages/[faraday^] bag whenever you are going about your daily life, preventing it from inadvertently generating data about your movements. Only use it for short stints and ideally for one to seven days max. No matter how careful you are, using a burner phone long term will eventually erode its anonymity, because anyone who cares to look could start to see patterns in the cell data over time.
+
+Another important detail: Using a “dumb phone” as a burner phone almost always means that you will not have access to end-to-end encrypted communications software on the device. In other words, part of the necessity of rotating the phones regularly is that authorities would be able to access call records and text messages. Access to end-to-end encrypted communication apps is one potential advantage of taking on a prepaid smartphone as a burner, but you have to weigh the pros and cons for your scenario.
+
+In either case, you should use your burner phone in an extremely, obsessively limited way for its intended purpose and absolutely nothing else. Write down phone numbers that you will contact using the burner phone rather than sending them or saving them in your regular personal devices, and never send your burner phone number to anyone from one of your everyday devices.
+
+When you are done with the burner phone, make sure that you get rid of it in a thoughtful way as well. “At the end of the intended use, consider steps to eliminate information, remove SIM cards and/or memory cards, making sure not to leave a potential vulnerability after you,” says Access Now’s Al-Maskati.
+
+=== Using an Alternative Phone
+
+Depending on your risk model, it may not be appropriate or even the most practical to use a true burner phone. Instead, you may want to consider using an altphone to separate elements of your digital life.
+
+“There is a lot of confusion, because ‘burner phone’ is a generic term,” says Matt Mitchell, CEO of the risk mitigation firm Safety Sync Group. “I usually try to group tactics and advice based on goals. It begins with why a normal phone isn't good for privacy and then a dial on how private you’re trying to get. The privacy goals are the dial—from safer hygiene, to more secure operating systems, to straight-up locked-down phones.”
+
+For many people, an altphone or “lighter” burner phone is likely to be a smartphone that allows a wide range of communications and access to privacy-enhancing tools such as encrypted messaging apps like Signal, VPNs, online tracker blockers, and more. This way you can tune your personal privacy dial to keep certain web browsing, software use, media consumption, or communication more private and anonymous than it would be on your normal devices.
+
+“What are you trying to protect? If you're just trying to obscure your phone number from somebody, you can do that in a much lighter way” than using a heavily anonymized device, the ACLU’s Williams says. “But if you're really trying to go off grid, you have to do all this other stuff.
+
+An altphone may be a smartphone that you separate as much as possible from your identity, perhaps a phone that you only use for attending protests. Or it could be an old phone you repurpose and use for things like traveling. How you set the privacy dial depends on the use case.
+
+“A repurposed phone can be used for an extended period of time,” Cyberlixir’s Vo says. “A repurposed phone already has your traces, even with factory reset. There might be a sales receipt, CCTV log, or someone taking a picture of you talking on the phone. So they are useful for compartmentalizing activities. Work versus personal phone is the most obvious example. Or one for international travel.” Reused devices also https://www.wired.com/story/phone-numbers-indentification-authentication/[retain certain identifiers^] such as IMEI numbers over time.
+
+
