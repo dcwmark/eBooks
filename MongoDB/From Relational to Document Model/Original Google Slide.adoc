@@ -1,0 +1,20 @@
+From Relational to Document Model - .local NY - Google Slides
+=============================================================
+
+.Gemini
+
+While you cannot use the standard "File" > "Download" option because the link is a *published* web link (indicated by `/pub?`) which typically restricts downloading, you can use a common workaround to save it as a *PDF* or *HTML* file.
+
+💡 *Workaround: Save as PDF via HTML View*
+
+1. *Modify the URL*: Take the link you provided and replace the entire ending, starting from `/pub?`, with `/htmlpresent`.
+  * *Original Link*: https://docs.google.com/presentation/d/e/2PACX-1vQXZJuZoBEWFhl9sL4QMdT0ZS7urPfAhVG-LXNFPyln3fNSX8fBEKcHdcVbsQ2rrQDUbQyCKuJGPtou/pub?start=false&loop=false&delayms=3000&slide=id.g34e80527291_1_10382
+  * *Modified Link*: https://docs.google.com/presentation/d/e/2PACX-1vQXZJuZoBEWFhl9sL4QMdT0ZS7urPfAhVG-LXNFPyln3fNSX8fBEKcHdcVbsQ2rrQDUbQyCKuJGPtou/htmlpresent
+1. *Open the New URL*: Paste the modified link into your browser and press Enter. This will load a simplified view with all slides stacked vertically.
+1. *Print to PDF*:
+  * On your computer, press *Ctrl+P* (Windows) or *Cmd+P* (Mac) to open the print dialog.
+  * Under the "Destination" or "Printer" option, select *Save as PDF* or *Microsoft Print to PDF*.
+  * Click Save.
+
+This will create a PDF of the entire presentation.
+
