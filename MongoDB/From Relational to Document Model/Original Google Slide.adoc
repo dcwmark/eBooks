@@ -18,3 +18,5 @@ While you cannot use the standard "File" > "Download" option because the link is
 
 This will create a PDF of the entire presentation.
 
+https://www.youtube.com/watch?v=_9C-EwAZqek[How to Download Protected/ View Only Google Slide Files From Google Drive^]
+
