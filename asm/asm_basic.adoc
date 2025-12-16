@@ -1,0 +1,69 @@
+= ASM
+:toc: left
+:toclevels: 3
+
+++++
+<style>
+p {
+  font-family: "DejaVu Sans";
+}
+</style>
+++++
+
+=== Flags registered
+
+The CPU has a special register (called `EFLAGS` or `RFLAGS` on x64) where each individual bit is a "flag" that
+records a property of the result of the most recent arithmetic or logical operation.
+
+[cols="1,1,8"]
+|===
+|Flag Mnemonic |Name |Purpose
+
+|ZF
+|Zero Flag
+|Set (1) if the result of the operation was *zero*; cleared (0) otherwise.
+
+|SF
+|Sign Flag
+|Set (1) if the result of the operation was *negative* (i.e., the most significant bit is 1); cleared (0) otherwise.
+
+|CF
+|Carry Flag
+|Set (1) if the operation resulted in an *unsigned overflow* (carry-out or borrow); cleared (0) otherwise.
+|===
+
+
+=== Registers
+
+The typical usage and naming conventions for registers in assembly are dictated by the system's
+ *Application Binary Interface (ABI)*, 
+which defines the "rules" for how functions interact, pass arguments, and manage memory.
+
+==== 1. x86-64 (System V ABI - Linux/macOS)
+
+The x86-64 architecture uses a *fast-call* convention, passing the first six
+integer/pointer arguments via registers
+
+[cols="2,2,5,2"]
+|===
+|Register (64-bit) |Low 32-bit |ABI Convention / Typical Usage |Volatility
+|*%RAX* |%EAX |*Return Value* (first 64-bits); Temporary (volatile) |*Caller-Saved*
+|*%RCX* |%ECX |*4th Argument* (Integer/Pointer) |Caller-Saved
+|*%RDX* |%EDX |*3rd Argument* (Integer/Pointer) |Caller-Saved
+|*%RDI* |%EDI |*1st Argument* (Integer/Pointer) |Caller-Saved
+|*%RSI* |%ESI |*2nd Argument* (Integer/Pointer) |Caller-Saved
+|*%R8 – %R9* |%R8D – %R9D |*5th and 6th Arguments* |Caller-Saved
+|*%RSP* |%ESP |*Stack Pointer* (Must be preserved) |Callee-Saved
+|*%RBP* |%EBP |*Base/Frame Pointer* (often ignored for speed) |Callee-Saved
+|*"%RBX, %R12–%R15* |%EBX, etc." |*Local Variables* (General Purpose) |*Callee-Saved*
+|===
+
+*Key Concepts*
+
+* *Caller-Saved (Volatile)*: The calling function (caller) expects these registers to be
+potentially overwritten by the called function (callee).
+If the caller needs the value after the call, it must save it to the stack first.
+* *Callee-Saved (Non-Volatile)*: The called function (callee) must preserve the original
+value of these registers. If the callee modifies them, it must save the original value to
+the stack and restore it before returning.
+
