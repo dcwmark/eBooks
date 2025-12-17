@@ -624,4 +624,35 @@ cset x0, ne
 * `cset` = *conditional set*
 * Writes `1` if condition true, else `0`
 
+=== Branchless Select (Ternary Operator)
+(Canonical, very important)
+
+*Branchless Conditional Move*
+
+*Purpose*
+
+Equivalent to:
+```c
+result = condition ? a : b;
+```
+*x86-64*
+```asm
+cmp rax, 0
+cmovne rbx, rcx
+```
+*Explanation*
+
+* `cmovne` = conditional move if not zero
+* No branch → no misprediction penalty
+
+*ARM64*
+```asm
+cmp  x0, #0
+csel x1, x2, x3, ne
+```
+*Explanation*
+
+* `csel` = *conditional select*
+* Picks `x2` or `x3` based on condition
+
 
