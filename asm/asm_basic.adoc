@@ -47,6 +47,7 @@ integer/pointer arguments via registers
 [cols="2,2,5,2"]
 |===
 |Register (64-bit) |Low 32-bit |ABI Convention / Typical Usage |Volatility
+
 |*%RAX* |%EAX |*Return Value* (first 64-bits); Temporary (volatile) |*Caller-Saved*
 |*%RCX* |%ECX |*4th Argument* (Integer/Pointer) |Caller-Saved
 |*%RDX* |%EDX |*3rd Argument* (Integer/Pointer) |Caller-Saved
@@ -73,7 +74,8 @@ The ARM64 architecture is a *RISC* architecture that uses many registers, simpli
 
 [cols="1,3,1"]
 |===
-}Register (64-bit) |ABI Convention / Typical Usage |Volatility
+|Register (64-bit) |ABI Convention / Typical Usage |Volatility
+
 |*X0 – X7* |*Function Arguments* (1st to 8th) and *Return Value* (X0/X1) |*Caller-Saved*
 |*X8* |Indirect Result Register (for large struct returns) / Temporary |Caller-Saved
 |*X9 – X15* |*Temporary / Scratch* registers for local data |Caller-Saved
@@ -99,6 +101,7 @@ their canonical ABI names.
 [cols="1,1,5,1"]
 |===
 |Register (Index) |ABI Name |Typical Usage |Volatility
+
 |*X0* |*zero* |*Hardwired to the constant value 0* (Cannot be written) |N/A
 |*X1* |*ra* |*Return Address* (Link Register) |Caller-Saved
 |*X2* |*sp* |*Stack Pointer* |Callee-Saved
@@ -120,6 +123,7 @@ Logical registers (*RAX, RBX, X0, etc.*) represent physical storage locations wi
 but their exact physical location and management are extremely complex and hidden from the programmer.
 
 *1. Architectural vs. Microarchitectural Registers*
+
 When you write assembly code, you are working with *Architectural Registers* (like RAX, RSP, RDI).
 These are the 16 registers defined by the x86-64 Instruction Set Architecture (ISA).
 
@@ -138,11 +142,13 @@ called the *Register Alias Table (RAT)*.
 
 
 *2. Why Register Renaming is Necessary*
+
 This complex physical mapping serves three critical purposes:
 
 [cols="1,2,2"]
 |===
 |Purpose	|Explanation	|Example
+
 |*Eliminating False Dependencies* |Solves the problem of
 *Write-After-Read (WAR)* and *Write-After-Write (WAW)* hazards.
 If two instructions both use `RAX`, the CPU can map them to two different physical registers,
@@ -230,11 +236,12 @@ The Caller never has to worry about saving or restoring these.
  (e.g., `%RBX`, `%RBP`, `%R12-%R15` in x86-64).
 
 
-*Summary and Rationale*
+==== Summary and Rationale
 
 [cols="1,2,2"]
 |===
 |Feature |Caller-Saved (Volatile) |Callee-Saved (Non-Volatile)
+
 |*Responsibility*	
 |*Caller* must save if it needs the value later.	|*Callee* must save if it uses the register.
 |*Purpose*
@@ -328,4 +335,126 @@ holding the original value of `%RBX` is treated as sacred by the called function
 If the Callee needs the register, it temporarily copies the sacred value to the
 stack and restores it before leaving.
 
+=== Argument/Return Roles
+
+==== 1. The Argument Passing Role
+When a function (`Caller`) decides to execute another function (`Callee`), it needs
+ to send input data (the function's arguments) to the `Callee`.
+
+Instead of pushing all arguments onto the slow stack memory, modern ABIs
+  (like x86-64 and ARM64) use specific, fast CPU registers for the first few arguments.
+  These are the registers listed in the "Argument" category.
+
+💡 The Rule for Arguments (x86-64)
+
+The first six integer or pointer arguments are placed into the following registers, in order:
+
+[%header, cols="1,1,2"]
+|===
+|Argument # |Register |Example in C Code
+
+|*1st* |%RDI |`int func(int a, ...)`
+|*2nd* |%RSI |`int func(..., int b, ...)`
+|*3rd* |%RDX |`int func(..., int c, ...)`
+|*4th* |%RCX |`int func(..., int d, ...)`
+|*5th* |%R8  |`int func(..., int e, ...)`
+|*6th* |%R9  |`int func(..., int f)`
+|===
+
+If a function needs more than six arguments, the remaining arguments are pushed onto the stack.
+
+*Example:*
+
+For the C call `sum(10, 20)`, the compiler generates assembly that does this *before* the call instruction:
+```asm
+mov rdi, 10    ; Set 1st argument (10)
+mov rsi, 20    ; Set 2nd argument (20)
+call sum_function
+```
+
+==== 2. The Return Value Role
+When the called function (`Callee`) finishes its work, it needs a standardized way to send
+ its output (the return value) back to the `Caller`.
+
+💡 The Rule for Return Values (x86-64)
+
+The result of the function is always placed in a dedicated register: `%RAX`.
+
+* *If the function returns a 64-bit integer, a pointer, or a smaller value, it goes into %RAX*.
+* If the return value is larger than 64 bits (e.g., a large structure), it might use both
+  `%RAX` and `%RDX` or a pointer to a stack location.
+
+*Example:*
+
+Inside `sum_function`:
+```asm
+; ... (calculation) ...
+mov rax, final_result ; Place the final result into RAX
+ret                   ; Return to the caller
+```
+
+==== Summary of the "Argument/Return" Group
+The registers categorized as "Argument/Return" are the registers that are guaranteed
+ to be used for the I/O of a function call.
+
+Because they are used for I/O, they are also classified as *Caller-Saved* (volatile).
+ The calling function expects these registers to be overwritten, either by arguments
+  it is setting up or by the return value that overwrites the previous contents of `%RAX`.
+
+== Assembly Coding format
+
+Assembly language code is traditionally structured into four main columns or fields,
+ though modern assemblers are often flexible with spacing and capitalization.
+
+The two fields you are asking about are the *Opcode/Mnemonic* (the "operator")
+ and the Operands (the data/registers being operated on).
+
+=== Standard Assembly Format
+
+The standard format is a sequence of four fields, usually separated by
+ whitespace (spaces or tabs):
+[cols="1,2,1,1"]
+|====
+|Field #1 |Field #2 |Field #3 |Field #4
+
+|*Label* |*Opcode/Mnemonic* |*Operands* |*Comment*
+|====
+
+*1. The Operator (Opcode/Mnemonic)*
+
+The operator (often called the *Mnemonic*) sits in the *second column*.
+ This is the instruction itself, defining the action the CPU will take.
+
+* *Examples*: `mov`, `add`, `test`, `jmp`, `call`, `push`, `pop`.
+
+*2. The Operands*
+
+The operands sit in the *third column*. These are the targets of the instruction—the registers,
+ memory locations, or immediate values (constants) that the operation will use or modify.
+
+* *Format*: Operands are listed after the Opcode and are separated by a comma (`,`).
+
+*Example*
+
+```ams
+; Field 1       Field 2      Field 3 (Operands)   Field 4
+; Label         Opcode       Destination, Source  Comment
+
+start:          mov          rax, 0x10            ; Load a constant value into RAX
+                add          rax, rbx             ; Add the contents of RBX to RAX
+                test         rax, rax             ; Fast check if RAX is zero
+                jnz          continue_label       ; Jump if RAX is Not Zero
+continue_label: push         rdi                  ; Save RDI onto the stack
+```
+
+=== Addressing Operand Order
+
+A critical point about the *third column (Operands)* is the order:
+
+* *Intel Syntax (Used in Windows/macOS/Intel manuals)*: 
+  Destination comes first, Source comes second.
+  ** `mov destination, source` (e.g., `mov rax, rbx` => RAX = RBX)
+* *AT&T Syntax (Used in Linux/GNU assemblers)*:
+  Source comes first, Destination comes second.
+  ** `mov source, destination` (e.g., `mov %rbx, %rax` => RAX = RBX)
 
