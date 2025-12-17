@@ -10,7 +10,7 @@ p {
 </style>
 ++++
 
-=== Flags registered
+== Flags registered
 
 The CPU has a special register (called `EFLAGS` or `RFLAGS` on x64) where each individual bit is a "flag" that
 records a property of the result of the most recent arithmetic or logical operation.
@@ -33,13 +33,13 @@ records a property of the result of the most recent arithmetic or logical operat
 |===
 
 
-=== Registers
+== Registers
 
 The typical usage and naming conventions for registers in assembly are dictated by the system's
  *Application Binary Interface (ABI)*, 
 which defines the "rules" for how functions interact, pass arguments, and manage memory.
 
-==== 1. x86-64 (System V ABI - Linux/macOS)
+=== 1. x86-64 (System V ABI - Linux/macOS)
 
 The x86-64 architecture uses a *fast-call* convention, passing the first six
 integer/pointer arguments via registers
@@ -67,7 +67,7 @@ If the caller needs the value after the call, it must save it to the stack first
 value of these registers. If the callee modifies them, it must save the original value to
 the stack and restore it before returning.
 
-==== 2. ARM64 (AArch64 / AAPCS)
+=== 2. ARM64 (AArch64 / AAPCS)
 
 The ARM64 architecture is a *RISC* architecture that uses many registers, simplifying the call process.
 
@@ -91,7 +91,7 @@ function calls significantly.
 * The *Link Register (LR/X30)* is explicitly used to store the return address, unlike x86
 where the return address is pushed onto the stack.6 This is a common feature of RISC architectures.
 
-==== 3. RISC-V (RV64)
+=== 3. RISC-V (RV64)
 
 RISC-V is a modern, modular RISC architecture. Its registers are often referred to by
 their canonical ABI names.
@@ -114,7 +114,7 @@ but writes to it are ignored. This simplifies many instructions.
 * *Named Registers*: Using names like a0 (Argument 0) and s0 (Saved Register 0) makes the assembly
  code much more readable and clearly enforces the calling convention.
 
-==== Registers Physical Implementation
+=== Registers Physical Implementation
 
 Logical registers (*RAX, RBX, X0, etc.*) represent physical storage locations within the CPU chip,
 but their exact physical location and management are extremely complex and hidden from the programmer.
@@ -158,5 +158,174 @@ If the guess is wrong, the changes made to the PRF are simply discarded without 
 |If the CPU guesses a jump is taken, it commits results to unused physical registers.
 If the guess is wrong, it just frees those registers and continues.
 |===
+
+*Conclusion*
+
+The registers are physical storage locations on the CPU die, but the architecture you program against (RAX, RBX)
+ is a logical abstraction. The CPU dynamically assigns these logical names to a much larger pool of physical
+ storage units behind the scenes to maximize parallelism and performance.
+
+=== Caller Cellee Convention
+
+That is a fundamental concept in assembly programming and one of the most critical aspects of any
+*Application Binary Interface (ABI)*. It ensures that functions can call each other without unintentionally
+destroying the data the caller needs.
+
+The entire convention is a social contract or a *guarantee* established between a function that makes a call
+(the *Caller*) and the function being called (the *Callee*).
+
+
+==== 1. The Caller-Saved Convention
+
+These registers are considered *temporary* or *volatile* (sometimes called "call-clobbered").
+
+*The Rule*
+
+If the *Caller* (Function A) has important data in a Caller-Saved register and wants that data to
+survive a call to the *Callee* (Function B), *the Caller is responsible for saving the register's value
+before the call and restoring it after the call*.
+
+*Caller's Action (When needed)*
+
+1. *Before the Call*: `push caller_saved_reg` (Saves the value to the stack).
+1. *Call the Callee*: `call function_B`.
+1. *After the Return*: `pop caller_saved_reg` (Restores the value from the stack).
+
+*Callee's Privilege*
+
+The Callee (Function B) can use and overwrite these registers freely without any obligation to save
+or restore them, because the Caller has already assumed they will be destroyed.
+
+*Common Usage*
+
+* Registers used for passing function arguments (e.g., `%RDI`, `%RSI`, `%RAX` in x86-64).
+* Registers used for short-lived, temporary scratch calculations within a function.
+
+==== 2. The Callee-Saved Convention
+
+These registers are considered *long-lived* or *non-volatile* (sometimes called "call-preserved").
+
+*The Rule*
+
+If the *Callee* (Function B) decides it needs to use or modify a Callee-Saved register, *the Callee*
+*is responsible for preserving the original value and restoring it before returning*.
+The Caller assumes the value will be unchanged.
+
+*Callee's Action (When used)*
+
+1. *Function Entry (Prologue)*: `push callee_saved_reg` (Saves the original value to the stack).
+1. *Function Body*: The Callee uses the register for its own purposes.
+1. *Function Exit (Epilogue)*: `pop callee_saved_reg` (Restores the original value from the stack,
+ usually just before `ret`).
+
+*Caller's Benefit*
+
+The Caller (Function A) can safely store long-term variables (like loop counters or local pointers)
+in Callee-Saved registers, knowing that any function it calls will automatically protect those values.
+The Caller never has to worry about saving or restoring these.
+
+*Common Usage*
+
+* Registers used for local variables that must persist across nested function calls
+ (e.g., `%RBX`, `%RBP`, `%R12-%R15` in x86-64).
+
+
+*Summary and Rationale*
+
+[cols="1,2,2"]
+|===
+|Feature |Caller-Saved (Volatile) |Callee-Saved (Non-Volatile)
+|*Responsibility*	
+|*Caller* must save if it needs the value later.	|*Callee* must save if it uses the register.
+|*Purpose*
+|Arguments, Return Value, Scratchpad.	
+|Persistent Local Variables, Frame Pointers.
+|*Trade-Off*
+|Saves *Callee* instructions (faster calls).
+|Saves *Caller* instructions (simpler code).
+|===
+
+*Why the Dual System? (The Optimization)*
+
+This two-sided system is an optimization that minimizes redundant work:
+
+1. *For Caller-Saved*: If a function (Caller) calls ten other functions but only needs one
+    temporary value, it's inefficient for all ten Callees to save and restore a register
+    they may not even use. It is better for the *Caller* to save only the one value it cares about.
+1. *For Callee-Saved*: If a function (Caller) has a loop counter that must survive hundreds
+    of internal function calls, it's far more efficient for the *Callee* (which only modifies the 
+    egister once) to save and restore it, rather than forcing the Caller to save and restore the
+    counter register around every single one of those hundreds of calls.
+
+It's all about minimizing the total number of `push` and `pop` instructions executed across
+the entire program.
+
+💻 *Assembly Example: Callee-Saved Convention*
+
+*The Caller's View (Function A)*
+
+The Caller uses `%RBX` for a long-term variable and assumes the Callee will protect it.
+
+```asm
+; --- Function A (The Caller) ---
+
+    mov rbx, 0xDEADBEEF ; Store an important value in a
+                        ; Callee-Saved register (RBX)
+
+    ; We call my_function. We DO NOT save RBX, because it's the CALLEE's job.
+    call my_function
+
+    ; After my_function returns, we expect RBX to STILL be 0xDEADBEEF.
+    ; If it isn't, my_function violated the ABI contract.
+    cmp rbx, 0xDEADBEEF ; This comparison should succeed (ZF=1)
+    ; ...
+```
+
+*The Callee's Implementation (my_function)*
+
+The Callee must save and restore `%RBX` if it intends to use it. This save/restore process
+ is the definition of the function's *Prologue* and *Epilogue*.
+
+```asm
+ ; --- my_function (The Callee) ---
+
+my_function:
+; ---------- PROLOGUE (Function Setup) ----------
+
+    ; 1. Preserve the Callee-Saved registers that we will modify.
+    push rbx ; Save the Caller's original RBX value onto the stack
+    
+    ; Note: A function would usually also save RBP and set up the stack frame here
+    ; push rbp
+    ; mov rbp, rsp
+    
+; ---------- FUNCTION BODY ----------
+
+    ; We are free to use RBX now, knowing we have a copy of the original value saved.
+    mov rbx, 12345678    ; Overwrite RBX for our own calculation
+    ; ... (lots of code using RBX) ...
+
+; ---------- EPILOGUE (Function Cleanup) ----------
+
+    ; 1. Restore the Callee-Saved registers.
+    pop rbx ; Restore the Caller's original RBX value from the stack.
+    
+    ; Note: If we saved RBP, we would restore it here
+    ; pop rbp
+    
+    ; 2. Return control to the Caller.
+    ret ; Jumps back to the instruction immediately following the 'call'
+```
+
+*Key Steps Visualized*
+
+The stack grows downward (to lower addresses). The `push` operation moves the
+Stack Pointer (`RSP`) down and stores the register content. The pop operation
+retrieves the data and moves the `RSP` back up.
+
+In essence, the Callee-Saved convention guarantees that the memory location
+holding the original value of `%RBX` is treated as sacred by the called function.
+If the Callee needs the register, it temporarily copies the sacred value to the
+stack and restores it before leaving.
 
 
