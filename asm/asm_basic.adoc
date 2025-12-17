@@ -480,6 +480,36 @@ When executing `test rax, rax`:
 * If `rax` is *non-zero*: The result of the operation is non-zero.
   The *Zero Flag (ZF)* is set to 0 (false), indicating a non-zero result.
 
+==== Coding Samples
+
+*x86-64*
+```asm
+test    rax, rax
+jz      .is_zero
+```
+__Why it’s elegant__
+
+* No immediate
+* No register modification
+* Short encoding
+* Sets ZF, SF, PF correctly
+
+> Compilers strongly prefer `test reg, reg` over `cmp reg, 0`.
+
+*ARM64*
+```asm
+cbz     x0, .is_zero
+```
+Or, when flags are needed later:
+
+```asm
+cmp     x0, #0
+b.eq    .is_zero
+```
+__Why ARM is nicer here__
+
+* `CBZ/CBNZ` fuses compare + branch
+* Often 1 µop internally
 
 === The Non-Destructive Zero Test
 This name focuses on the key advantage over other instructions like `AND` or `OR` when
@@ -507,4 +537,91 @@ The `test` instruction is explicitly designed to be *non-destructive* (flags onl
 So, while there's no single catchy mnemonic like "The Test-Jump Sequence," calling
   it the *Fast Zero Check* or emphasizing its *Non-Destructive* nature captures its
   essence and efficiency.
+
+=== Fast Equality Check Against Zero (Return Value Test)
+
+*Nomenclature*
+
+*Proposed*: __Booleanization via Flags__
+
+*Common compiler term*: __setcc idiom__
+
+*Pattern*
+
+Convert a value into `0` or `1` without branching.
+
+*x86-64*
+```asm
+test    rax, rax
+setz    al
+```
+or signed:
+```asm
+test    rax, rax
+setg    al      ; > 0
+```
+__Why it’s used__
+
+* Branchless
+* Feeds well into vectorized or speculative code
+
+=== Zero Register via XOR / Self-Move Elimination
+(Canonical)
+
+*Zeroing Idiom* (compiler terminology)
+
+*Purpose*
+
+Set a register to zero *as fast as possible*
+
+*x86-64*
+```asm
+xor rax, rax
+```
+*Explanation*
+
+* `rax XOR rax = 0`
+* Faster than `mov rax, 0`
+* Breaks dependency chains (important for out-of-order CPUs)
+
+*ARM64*
+```asm
+mov x0, xzr
+```
+*Explanation*
+
+* `xzr` is a *hardware zero register*
+* Reading from it always yields `0`
+* Writing to it discards data
+
+=== Fast Boolean Normalize (0 or 1)
+(Canonical)
+
+*Boolean Canonicalization*
+
+*Purpose*
+
+Convert any non-zero value into `1`, zero stays `0`
+
+*x86-64*
+```asm
+test rax, rax
+setnz al
+```
+*Explanation*
+
+* setnz al sets the low byte:
+** 1 if non-zero
+** 0 if zero
+
+*ARM64*
+```asm
+cmp  x0, #0
+cset x0, ne
+```
+*Explanation*
+
+* `cset` = *conditional set*
+* Writes `1` if condition true, else `0`
+
 
