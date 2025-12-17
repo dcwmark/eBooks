@@ -471,7 +471,7 @@ This is the most descriptive name, highlighting its primary function.
   It can also often `macro-fuse` with the subsequent conditional jump (`jne` or `je`)
   into a single micro-operation (uop), which improves execution speed.
 
-*How Flags are Affected*
+==== How Flags are Affected
 
 When executing `test rax, rax`:
 
