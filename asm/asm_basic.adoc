@@ -656,8 +656,7 @@ csel x1, x2, x3, ne
 * Picks `x2` or `x3` based on condition
 
 === System Call
-
-*Purpose*
+*Objective*
 
 Request services from Linux kernel (I/O, exit, etc.)
 
@@ -673,7 +672,6 @@ mov rax, syscall_number
 syscall
 ```
 
-
 *ARM*
 ```asm
 mov x8, #93 ; exit
@@ -685,5 +683,37 @@ svc #0
 mov x8, syscall_number
 svc #0
 ```
+=== Function Prologue/Epilogue
+
+*x86-64*
+
+* Nomenclature: __Prologue__, __Epilogue__
+* Objective: Set up and tear down stack frames for function calls.
+
+*Sample*
+```asm
+push %rbp        ; save base pointer
+mov %rsp, %rbp   ; set new base pointer
+...
+mov %rbp, %rsp   ; restore stack pointer
+pop %rbp         ; restore base pointer
+ret              ; return to caller
+```
+*ARM68*
+
+* Nomenclature: STP/ LDP, RET
+* Objective: Save/restore registers and manage stack frames.
+
+*Sample*
+```asm
+stp x29, x30, [sp, #-16]! ; save FP & LR
+mov x29, sp               ; set frame pointer
+...
+ldp x29, x30, [sp], #16   ; restore FP & LR
+ret
+```
+
+
+
 
 
