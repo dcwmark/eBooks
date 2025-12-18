@@ -655,4 +655,35 @@ csel x1, x2, x3, ne
 * `csel` = *conditional select*
 * Picks `x2` or `x3` based on condition
 
+=== System Call
+
+*Purpose*
+
+Request services from Linux kernel (I/O, exit, etc.)
+
+*x86-64*
+```asm
+mov rax, 60 ; exit
+xor rdi, rdi
+syscall
+```
+*Explanation*
+```asm
+mov rax, syscall_number
+syscall
+```
+
+
+*ARM*
+```asm
+mov x8, #93 ; exit
+mov x0, #0
+svc #0
+```
+*Explanation*
+```asm
+mov x8, syscall_number
+svc #0
+```
+
 
