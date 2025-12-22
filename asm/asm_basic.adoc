@@ -666,6 +666,7 @@ mov rax, 60 ; exit
 xor rdi, rdi
 syscall
 ```
+
 *Explanation*
 ```asm
 mov rax, syscall_number
@@ -678,11 +679,13 @@ mov x8, #93 ; exit
 mov x0, #0
 svc #0
 ```
+
 *Explanation*
 ```asm
 mov x8, syscall_number
 svc #0
 ```
+
 === Function Prologue/Epilogue
 
 *x86-64*
@@ -701,7 +704,7 @@ ret              ; return to caller
 ```
 *ARM68*
 
-* Nomenclature: STP/ LDP, RET
+* Nomenclature: STP/LDP, RET
 * Objective: Save/restore registers and manage stack frames.
 
 *Sample*
@@ -713,7 +716,169 @@ ldp x29, x30, [sp], #16   ; restore FP & LR
 ret
 ```
 
+=== Fast Sign Extraction
 
+(Canonical, used in math, SIMD, crypto)
+
+*Pattern Name*
+
+Sign Mask Extraction
+
+
+*Purpose*
+
+* Extract sign (-1 or 0) from a signed integer
+
+
+*x86-64*
+```asm
+sar rax, 63
+```
+
+*Explanation*
+
+* Arithmetic shift right
+* Fills with sign bit
+* Result:
+** 0 if positive
+** -1 if negative
+
+*ARM64*
+```asm
+asr x0, x0, #63
+```
+
+=== Absolute Value (Branchless)
+
+(Canonical)
+
+*Pattern Name*
+
+Branchless Absolute Value
+
+*x86-64*
+```asm
+mov rbx, rax
+sar rbx, 63
+xor rax, rbx
+sub rax, rbx
+```
+
+*Explanation*
+
+* Compute sign mask
+* Flip bits if negative
+* Subtract correction
+
+*ARM64*
+```asm
+asr x1, x0, #63
+eor x0, x0, x1
+sub x0, x0, x1
+```
+
+=== Power-of-Two Check
+
+(Canonical)
+
+*Pattern Name*
+
+Single-Bit Test
+
+*Purpose*
+
+Check if x is a power of two
+
+*x86-64*
+```asm
+test rax, rax
+jz   not_power
+lea  rcx, [rax - 1]
+test rax, rcx
+jz   is_power
+```
+
+*Explanation*
+
+Power of two has *exactly one bit set*
+
+*ARM64*
+```asm
+cbz  x0, not_power
+sub  x1, x0, #1
+ands xzr, x0, x1
+b.eq is_power
+```
+
+=== Fast Range Clamp (Branchless)
+
+(Compiler-generated idiom)
+
+*Pattern Name*
+
+Branchless Clamp
+
+*Purpose*
+```asm
+x = min(max(x, lo), hi)
+```
+
+*x86-64*
+```asm
+cmp   rax, rbx
+cmovl rax, rbx
+cmp   rax, rcx
+cmovg rax, rcx
+```
+
+*ARM64 (best here)*
+```asm
+cmp  x0, x1
+csel x0, x1, x0, lt
+cmp  x0, x2
+csel x0, x2, x0, gt
+```
+
+=== Fast Null Pointer Check
+
+(Canonical)
+
+*Pattern Name*
+
+Null Test Idiom
+
+*x86-64*
+```asm
+test rdi, rdi
+jz   is_null
+```
+
+*ARM64*
+```asm
+cbz x0, is_null
+```
+
+=== Strength-Reduced Multiplication (Multiply by Constant)
+
+(Compiler canonicalization)
+
+*Pattern Name*
+
+Strength Reduction
+
+*Purpose*
+
+Replace multiplication with shifts/adds
+
+*x86-64*
+```asm
+lea rax, [rdi + rdi*4]  ; x * 5
+```
+
+*ARM64*
+```asm
+add x0, x0, x0, lsl #2
+```
 
 
 
