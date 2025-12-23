@@ -458,6 +458,102 @@ A critical point about the *third column (Operands)* is the order:
   Source comes first, Destination comes second.
   ** `mov source, destination` (e.g., `mov %rbx, %rax` => RAX = RBX)
 
+== Asm Ops
+
+=== `cbz`
+Compare and Branch on Zero
+
+* ARM64 instruction
+* specialized control-flow instruction
+* combines a comparison and a conditional jump into a single instruction
+* opposite `cbnz`
+
+🔍 *How CBZ Works*
+
+The instruction checks whether a specific register
+contains the value *0*. Based on that result, it either "takes" the branch
+or continues to the next line of code.
+
+. *The Test*: The CPU inspects the value in the source register (_Rn_).
+. *The Condition*: *If the register is 0*: The program jumps (branches)
+ to the specified label.
+ 
+ * *If the register is NOT 0*: The program simply moves to the next instruction
+  in sequence (falls through).
+ * *No Flags Changed*: Unlike the standard `CMP` (Compare) instruction,
+   *CBZ does not update the condition flags* (Negative, Zero, Carry, Overflow).
+   This is useful if you want to branch based on a zero check without
+   overwriting flags set by a previous operation.
+   
+🛠️ *Syntax and Format*
+
+In ARM64 (AArch64), the syntax is: `CBZ <Xt|Wt>, <label>`
+
+* `<Xt|Wt>`: The 64-bit (X) or 32-bit (W) register to check.
+* `<label>`: The destination address (encoded as a PC-relative offset).
+
+*Logic Representation*
+⚖️ CBZ vs. Standard CMP/BEQ
+In most assembly languages, checking for zero requires two steps. ARM allows you to do it in one:
+If (R~n~ = 0) then (PC <- PC + offset)
+
+⚖️ *CBZ vs. Standard CMP/BEQ*
+
+In most assembly languages, checking for zero requires two steps. ARM allows you to do it in one:
+
+[cols="1,1,3"]
+|===
+|Method |Instructions |Explanation
+
+|*Traditional*  |`CMP W0, #0` `B.EQ label` |Compare register with #0 (sets flags), then branch if Equal flag is set.
+|*CBZ*          |`CBZ W0, label`  |Check for zero and branch immediately. Flags remain untouched.
+|===
+
+*Why use CBZ?*
+
+* *Code Density*: It saves 4 bytes of code space by using one instruction instead of two.
+* *Performance*: It can reduce the "pressure" on the CPU's execution units,
+ as the branch logic is more streamlined.
+* *Flag Preservation*: It allows you to perform a check "on the side" without ruining the
+ results of a previous mathematical operation that you might need to check later.
+
+⚠️ *Important Limitations*
+
+* *Range*: In ARM64, the branch range is limited to *±1 MB* from the current instruction.
+ For very distant jumps, you must use a standard CMP and B (which has a much larger range).
+* *Zero Only*: You can only use CBZ to check for zero. You cannot use it to check 
+ if a register equals `5` or any other constant.
+
+---
+
+=== `cmovne`
+Conditional Move Not Equal
+
+* x89-64 instruction
+* part of the conditional ove instruction set
+* It provides a way to conditionally transfer data
+between registers or between a memory location and a register 
+*without using a traditional branch/jump instruction*
+
+💻 *How CMOVNE Works*
+
+The instruction format is generally: `CMOVNE destination, source`
+
+. *Check the Zero Flag (ZF)*: The `CMOVNE` instruction inspects the
+*Zero Flag (ZF)* in the `RFLAGS` register. The Zero Flag is typically
+set or cleared by a preceding instruction, such as a `CMP` (Compare)
+or an arithmetic/logical operation.
+. Condition: The "NE" in `CMOVNE` stands for *Not Equal*. The move operation
+is executed *if the Zero Flag (ZF) is 0*.
+* *Condition Met (ZF = 0)*: This means the previous comparison/operation
+resulted in a non-zero outcome, which typically signifies that the two compared
+operands were *not equal*. In this case, the value in the `source` operand is
+copied to the `destination` operand.
+* *Condition Not Met (ZF = 1)*: This means the previous comparison/operation
+resulted in a *zero* outcome, which typically signifies that the two compared
+operands were *equal*. In this case, the move *does not occur*, and the
+`destination` operand retains its original value.
+
 == Cute Gist/Patterns
 
 === The Fast Zero check
