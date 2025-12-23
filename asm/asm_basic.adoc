@@ -616,8 +616,8 @@ used for the same purpose:
 |Instruction |Behavior |Change to Register Value?
 
 |`test rax, rax` |rax AND rax (Flags only)  |*No*
-|`and rax, rax`  |rax=rax AND rax           |Yes (But always the same value)
-|`or rax, rax`   |rax=rax OR rax            |Yes (But always the same value)
+|`and  rax, rax` |rax=rax AND rax           |Yes (But always the same value)
+|`or   rax, rax` |rax=rax OR rax            |Yes (But always the same value)
 |===
 
 While `and rax, rax` and `or rax, rax` also set the flags correctly for a zero check,
