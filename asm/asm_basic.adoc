@@ -556,6 +556,67 @@ operands were *equal*. In this case, the move *does not occur*, and the
 
 == Cute Gist/Patterns
 
+=== System Call
+*Objective*
+
+Request services from Linux kernel (I/O, exit, etc.)
+
+*x86-64*
+```asm
+mov rax, 60 ; exit
+xor rdi, rdi
+syscall
+```
+
+*Explanation*
+```asm
+mov rax, syscall_number
+syscall
+```
+
+*ARM*
+```asm
+mov x8, #93 ; exit
+mov x0, #0
+svc #0
+```
+
+*Explanation*
+```asm
+mov x8, syscall_number
+svc #0
+```
+
+=== Function Prologue/Epilogue
+
+*x86-64*
+
+* Nomenclature: __Prologue__, __Epilogue__
+* Objective: Set up and tear down stack frames for function calls.
+
+*Sample*
+```asm
+push %rbp        ; save base pointer
+mov %rsp, %rbp   ; set new base pointer
+...
+mov %rbp, %rsp   ; restore stack pointer
+pop %rbp         ; restore base pointer
+ret              ; return to caller
+```
+*ARM68*
+
+* Nomenclature: STP/LDP, RET
+* Objective: Save/restore registers and manage stack frames.
+
+*Sample*
+```asm
+stp x29, x30, [sp, #-16]! ; save FP & LR
+mov x29, sp               ; set frame pointer
+...
+ldp x29, x30, [sp], #16   ; restore FP & LR
+ret
+```
+
 === The Fast Zero check
 This is the most descriptive name, highlighting its primary function.
  The sequence is the most efficient and concise way to determine
@@ -590,7 +651,7 @@ __Why it’s elegant__
 * Short encoding
 * Sets ZF, SF, PF correctly
 
-> Compilers strongly prefer `test reg, reg` over `cmp reg, 0`.
+.Compilers strongly prefer `test reg, reg` over `cmp reg, 0`.
 
 *ARM64*
 ```asm
@@ -750,67 +811,6 @@ csel x1, x2, x3, ne
 
 * `csel` = *conditional select*
 * Picks `x2` or `x3` based on condition
-
-=== System Call
-*Objective*
-
-Request services from Linux kernel (I/O, exit, etc.)
-
-*x86-64*
-```asm
-mov rax, 60 ; exit
-xor rdi, rdi
-syscall
-```
-
-*Explanation*
-```asm
-mov rax, syscall_number
-syscall
-```
-
-*ARM*
-```asm
-mov x8, #93 ; exit
-mov x0, #0
-svc #0
-```
-
-*Explanation*
-```asm
-mov x8, syscall_number
-svc #0
-```
-
-=== Function Prologue/Epilogue
-
-*x86-64*
-
-* Nomenclature: __Prologue__, __Epilogue__
-* Objective: Set up and tear down stack frames for function calls.
-
-*Sample*
-```asm
-push %rbp        ; save base pointer
-mov %rsp, %rbp   ; set new base pointer
-...
-mov %rbp, %rsp   ; restore stack pointer
-pop %rbp         ; restore base pointer
-ret              ; return to caller
-```
-*ARM68*
-
-* Nomenclature: STP/LDP, RET
-* Objective: Save/restore registers and manage stack frames.
-
-*Sample*
-```asm
-stp x29, x30, [sp, #-16]! ; save FP & LR
-mov x29, sp               ; set frame pointer
-...
-ldp x29, x30, [sp], #16   ; restore FP & LR
-ret
-```
 
 === Fast Sign Extraction
 
@@ -976,5 +976,59 @@ lea rax, [rdi + rdi*4]  ; x * 5
 add x0, x0, x0, lsl #2
 ```
 
+=== Loop/Counter Decrement Pattern
 
+*Purpose*
+
+This is critical for all assembly loops (like for and while loops).
+
+[cols="1.1.2"]
+|===
+|Pattern	    |Nomenclature	    |Purpose
+
+|`dec reg`	  |*The Decrement and Check*	| Decrements a counter and sets the flags based on the new value.
+|`j(ne/nz) somewhere` | . |Checks if the counter has reached zero.
+|===
+
+🔍 *How it Works*
+
+`dec reg` subtracts 1 from the register and sets the flags based on the result.
+
+* If the result is 0, the *Zero Flag (ZF)* is set to 1.
+* If the result is non-zero, the *Zero Flag (ZF)* is cleared to 0.
+
+==== Coding Sample
+(A simple loop)
+```asm
+loop_start:
+    ; ... loop body ...
+    dec rcx            ; Decrement counter
+    jnz loop_start     ; Jump if Not Zero (RCX != 0)
+```
+
+=== Arithmetic Check Pattern
+
+*Purpose*
+Any arithmetic operation implicitly sets the flags,
+ which can be immediately followed by a jump.
+ This avoids a separate `cmp` or `test` instruction entirely.
+
+[cols="2,1,5"]
+|===
+|Pattern	    |Nomenclature	    |Purpose
+
+|`add/sub reg, op / inc/dec reg`  |*Inline Flag Set*  |Checks if an arithmetic result satisfied a condition (e.g., if an addition overflowed or if a subtraction resulted in zero).
+|`j(cond) somewhere`  | . |Implements logic like `if (addition_overflowed) or if (result == 0).`
+|===
+
+🔍 *How it Works*
+
+The instruction performs the arithmetic, and the flags (like *CF*
+ for carry/unsigned overflow and *OF* for signed overflow) are set.
+
+==== Coding Sample
+```asm
+add   rax, rbx          ; RAX = RAX + RBX. CF is set if unsigned overflow occurred.
+jc    overflow_error    ; Jump if Carry (i.e., unsigned overflow)
+```
 
