@@ -1011,6 +1011,7 @@ loop_start:
 === Arithmetic Check Pattern
 
 *Purpose*
+
 Any arithmetic operation implicitly sets the flags,
  which can be immediately followed by a jump.
  This avoids a separate `cmp` or `test` instruction entirely.
