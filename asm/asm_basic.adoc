@@ -425,14 +425,16 @@ The standard format is a sequence of four fields, usually separated by
 The operator (often called the *Mnemonic*) sits in the *second column*.
  This is the instruction itself, defining the action the CPU will take.
 
-* *Examples*: `mov`, `add`, `test`, `jmp`, `call`, `push`, `pop`.
+==== Examples
+`mov`, `add`, `test`, `jmp`, `call`, `push`, `pop`.
 
 ==== The Operands
 
 The operands sit in the *third column*. These are the targets of the instruction—the registers,
  memory locations, or immediate values (constants) that the operation will use or modify.
 
-* *Format*: Operands are listed after the Opcode and are separated by a comma (`,`).
+==== Format
+Operands are listed after the Opcode and are separated by a comma (`,`).
 
 ==== Example
 
