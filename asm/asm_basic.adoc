@@ -598,12 +598,12 @@ svc #0
 
 *Sample*
 ```asm
-push %rbp        ; save base pointer
-mov %rsp, %rbp   ; set new base pointer
+push %rbp         ; save base pointer
+mov  %rsp, %rbp   ; set new base pointer
 ...
-mov %rbp, %rsp   ; restore stack pointer
-pop %rbp         ; restore base pointer
-ret              ; return to caller
+mov  %rbp, %rsp   ; restore stack pointer
+pop  %rbp         ; restore base pointer
+ret               ; return to caller
 ```
 *ARM68*
 
@@ -1034,3 +1034,119 @@ add   rax, rbx          ; RAX = RAX + RBX. CF is set if unsigned overflow occurr
 jc    overflow_error    ; Jump if Carry (i.e., unsigned overflow)
 ```
 
+== x86-64 and ARM64 Common Patterns
+
+=== 🖥️ x86-64 Common Patterns
+
+==== Function Prologue / Epilogue
+* *Nomenclature*: __Prologue__, __Epilogue__
+* *Objective*: Set up and tear down stack frames for function calls.
+
+===== Sample:
+```asm
+push %rbp         ; save base pointer
+mov  %rsp, %rbp   ; set new base pointer
+...
+mov  %rbp, %rsp   ; restore stack pointer
+pop  %rbp         ; restore base pointer
+ret               ; return to caller
+```
+
+=== Register Usage Conventions
+* *Nomenclature*: __Caller-saved__ vs __Callee-saved registers__
+* *Objective*: Manage which registers must be preserved across function calls.
+
+==== Sample: 
+`%rax` often holds return values, `%rsp` is the stack pointer.
+
+
+=== Data Movement
+* *Nomenclature*: __MOV__, __PUSH__/__POP__
+* *Objective*: Transfer data between registers and memory.
+
+==== Sample:
+```asm
+mov  %rax, %rbx   ; copy value
+push %rcx         ; save register on stack
+pop  %rcx         ; restore register
+```
+
+=== Arithmetic and Logic
+* *Nomenclature*: __ADD__, __SUB__, __IMUL__, __AND__, __OR__
+* *Objective*: Perform basic math and bitwise operations.
+
+==== Sample:
+```asm
+add  $5, %rax     ; add immediate
+imul %rbx, %rax   ; multiply
+```
+
+=== Branching
+* *Nomenclature*: __CMP__, __JMP__, __JE__/__JNE__
+* *Objective*: Conditional and unconditional control flow.
+
+==== Sample:
+```asm
+cmp %rax, %rbx
+je  equal_label
+jmp end_label
+```
+
+=== 📱ARM64 Common Patterns
+
+==== Function Prologue / Epilogue
+* *Nomenclature*: __STP__/ __LDP__, __RET__
+* *Objective*: Save/restore registers and manage stack frames.
+
+==== Sample:
+```asm
+stp x29, x30, [sp, #-16]! ; save FP & LR
+mov x29, sp               ; set frame pointer
+...
+ldp x29, x30, [sp], #16   ; restore FP & LR
+ret
+```
+
+=== Data Movement
+* *Nomenclature*: __MOV__, __LDR__, __STR__, __ADR__
+* *Objective*: Move values between registers and memory.
+
+==== Sample:
+```asm
+mov x0, #5        ; immediate to register
+ldr x1, [x2]      ; load from memory
+str x1, [x2]      ; store to memory
+adr x3, label     ; load address
+```
+
+=== Arithmetic and Logic
+* *Nomenclature*: __ADD__, __SUB__, __MUL__, __AND__, __ORR__
+* *Objective*: Perform math and bitwise operations.
+
+==== Sample:
+```asm
+add x0, x1, x2    ; x0 = x1 + x2
+sub x3, x4, #1    ; decrement
+```
+
+=== Branching
+* *Nomenclature*: __B__, __BL__, __CBZ__/__CBNZ__
+* *Objective*: Control flow and function calls.
+
+==== Sample:
+```asm
+cbz x0, zero_label   ; branch if zero
+bl  func_label       ; branch with link (function call)
+b   end_label        ; unconditional branch
+```
+
+=== Register Conventions
+* *Nomenclature*: __x0__–__x7__ (function arguments), __x0__ (return value)
+* *Objective*: Standard calling convention for passing parameters.
+
+
+=== 🔑 Key Takeaway
+* *x86-64* emphasizes stack-based calling conventions with `%rsp` and `%rbp`.
+* *ARM64* emphasizes register-based calling conventions with `x0–x7` for arguments.
+* Both architectures share common instruction categories:
+ *data movement, arithmetic, branching, and function call setup/teardown*.
