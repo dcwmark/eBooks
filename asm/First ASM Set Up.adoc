@@ -1,0 +1,106 @@
+
+## Required Tools
+
+### 1. **Assembler (NASM)**
+   - **Description**: NASM (Netwide Assembler) is an assembler for the x86 architecture.
+   - **Installation**: You can install NASM using the following command:
+```bash
+sudo apt update
+sudo apt install nasm
+```
+
+### 2. **Linker (LD)**
+   - **Description**: The GNU Linker is used to link object files into executables.
+   - **Installation**: Typically included with the development packages, but you can ensure it’s installed with:
+```bash
+sudo apt install binutils
+```
+
+### 3. **Text Editor**
+   - **Description**: You can use any text editor, like `nano`, `vim`, or `gedit`, to write your Assembly code.
+   - **Installation**: Most editors come pre-installed in Kali. If you need to install one, you can use:
+```bash
+sudo apt install nano
+```
+
+## Steps to Create an Executable
+
+### Step 1: Write Your Assembly Code
+. Open your text editor and write the Assembly program. For example, using `nano`: +
+  ```bash
+  nano hello.asm
+  ```
+. Write your Assembly code in the editor (as shown in the previous response), then save and exit the editor (in `nano`, press `CTRL + O` to save, then `CTRL + X` to exit).
+
+### Step 2: Assemble the Code
+. Use NASM to convert the Assembly source file to an object file: +
+  ```bash
+  nasm -f elf64 hello.asm -o hello.o
+  ```
+   - The `-f elf64` flag specifies the output format (64-bit ELF).
+
+### Step 3: Link the Object File
+. Link the object file to create an executable using LD: +
+ ```bash
+ ld hello.o -o hello
+ ```
+   - This will create an executable named `hello`.
+
+### Step 4: Run the Executable
+1. You can now run your program: +
+   ```bash
+   ./hello
+   ```
+
+### Step 5: (Optional) Check for Errors
+If you encounter any issues during assembly or linking, check for:
+
+- Syntax errors in the Assembly code.
+- Ensure that you are using the correct calling conventions and system calls for your chosen architecture.
+
+### Conclusion
+This setup allows you to write, assemble, link, and execute simple Assembly programs on a Kali Linux machine. Ensure that your assembly code adheres to the guidelines for your target architecture to prevent errors during compilation and execution.## Key Components of a Simple Assembly Program
+
+
+## Basic Structure
+A straightforward Assembly program will usually include:
+
+1. **Data Section**: Where you define the message to be printed.
+2. **Text Section**: The executable code where you set up the call to output the message.
+3. **System Calls**: For Linux, this involves invoking system calls through registers.
+
+### Example Structure
+
+Here is a simple example of a "Hello World" program in x86 Assembly:
+
+```asm
+section .data
+    hello db 'Hello, World!', 0
+
+section .text
+    global _start
+
+_start:
+    ; Write the message to stdout
+    mov eax, 1          ; syscall: write
+    mov ebx, 1          ; file descriptor: stdout
+    mov ecx, hello      ; pointer to message
+    mov edx, 13         ; length of message
+    int 0x80            ; call kernel
+
+    ; Exit the program
+    mov eax, 1          ; syscall: exit
+    xor ebx, ebx        ; return 0
+    int 0x80            ; call kernel
+```
+
+### Description of Each Part
+- **section .data**: Contains the string "Hello, World!" to be printed.
+- **section .text**: The main code block.
+- **_start label**: The entry point of the program.
+- **syscall for write**: It writes the string to the standard output.
+- **Exit syscall**: Ends the program.
+
+### Conclusion
+For writing a simple Assembly program like "Hello World," the information should detail basic syntax, sections of an Assembly program, and system call conventions. Key points to look for in the referenced file include examples of data definitions, syscall instructions, and program structure.
+

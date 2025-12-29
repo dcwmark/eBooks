@@ -455,10 +455,10 @@ A critical point about the *third column (Operands)* is the order:
 
 * *Intel Syntax (Used in Windows/macOS/Intel manuals)*: 
   Destination comes first, Source comes second.
-  ** `mov destination, source` (e.g., `mov rax, rbx` => RAX = RBX)
+  ** `mov destination, source` (e.g., `mov rax, rbx` = RAX <= RBX)
 * *AT&T Syntax (Used in Linux/GNU assemblers)*:
   Source comes first, Destination comes second.
-  ** `mov source, destination` (e.g., `mov %rbx, %rax` => RAX = RBX)
+  ** `mov source, destination` (e.g., `mov %rbx, %rax` = RAX => RBX)
 
 == Asm Ops
 
