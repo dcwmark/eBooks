@@ -106,6 +106,15 @@ For writing a simple Assembly program like "Hello World," the information should
 
 
 ## Hello World
+
+```bash
+nasm -f elf32 hello.asm -o hello.o
+ld -m elf_i386 -s -o hello hello.o
+./hello
+```
+```
+
+
 ```asm
 section .data
   hello db 'Hello, World!', 10    ; db stands for “Define Byte.”
