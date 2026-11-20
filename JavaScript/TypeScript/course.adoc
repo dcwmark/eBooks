@@ -1,0 +1,21 @@
+= TypeScript
+
+:author: JavaScript Engineering Archive
+:date: Nov 2026
+:toc: left
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:description: A Quick course
+
+=== 1. Basics
+
+[source,ts]
+----
+let name: string = "Ana";
+let ids: number[] = [1, 2];
+let pair: [string, number] = ["a", 1]; // tuple
+let x: unknown; // safer than any
+----
+Prefer `unknown` over `any`.  Narrow it before use.
+
