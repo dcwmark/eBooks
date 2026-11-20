@@ -19,3 +19,92 @@ let x: unknown; // safer than any
 ----
 Prefer `unknown` over `any`.  Narrow it before use.
 
+=== 2. Interfaces -vs- Types
+
+[source,ts]
+----
+interface User { id: number; name: string; email?: string }
+type ID = string | number;
+type Admin = User & { role: "admin" };
+----
+
+Both describe shapes. 
+[horizontal]
+Interfaces:: can be extended and merged. 
+Types:: handle unions, intersections, and mapped types.
+
+Use whichever your team prefers and stay consistent.
+
+=== 3. Unions and narrowing
+
+[source,ts]
+----
+function print(v: string | number) {
+  if (typeof v === "string") return v.toUpperCase();
+  return v.toFixed(2);
+}
+----
+Other narrowing tools: `in`, `instanceof``, and custom type guards (`v` is User).
+
+=== 4. Discriminated unions
+
+[source,ts]
+----
+type Result =
+  | { status: "ok"; data: string }
+  | { status: "error"; message: string };
+
+function handle(r: Result) {
+  if (r.status === "ok") r.data; else r.message;
+}
+----
+
+=== 5. Generics
+
+[source,ts]
+----
+function first<T>(arr: T[]): T | undefined {
+  return arr[0];
+}
+function pick<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+----
+
+=== 6. Utility types
+- `Partial<T>`: all props optional
+- `Required<T>`: all props required
+- `Pick<T, K> / Omit<T, K>`: select or drop props
+- `Readonly<T>`: immutable props
+- `Record<K, V>`: object map
+- `ReturnType<typeof fn>`: infer a function’s return type
+
+=== 7. Enums, as const, satisfies
+
+[source,ts]
+----
+const ROLES = ["admin", "user"] as const;
+type Role = typeof ROLES[number]; // "admin" | "user"
+----
+Many teams prefer string-literal unions over `enum`.
+
+=== 8. Express example
+
+[source,ts]
+----
+import { Request, Response } from "express";
+app.get("/users/:id", (req: Request<{ id: string }>, res: Response<User>) => {
+  res.json({ id: Number(req.params.id), name: "Ana" });
+});
+----
+
+==== 9. `tsconfig` essentials
+`"strict"`: true turns on `strictNullChecks`, `noImplicitAny`, and more.
+Know `target`, `module`, `outDir`, and `esModuleInterop`.
+
+=== Likely interview questions
+[horizontal]
+What is structural typing?:: Compatibility depends on shape, not declared name.
+`readonly` vs `const`?:: `const` prevents reassigning a variable. `readonly` prevents mutating a property.
+What are type assertions?:: `value as Type`` overrides the compiler. It doesn’t convert anything, so use it sparingly.
+Optional chaining and nullish coalescing?:: `a?.b` and `a ?? "default"` (unlike `||`, `??` only triggers on null/undefined).
