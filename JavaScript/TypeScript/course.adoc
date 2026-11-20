@@ -105,6 +105,6 @@ Know `target`, `module`, `outDir`, and `esModuleInterop`.
 === Likely interview questions
 [horizontal]
 What is structural typing?:: Compatibility depends on shape, not declared name.
-`readonly` vs `const`?:: `const` prevents reassigning a variable. `readonly` prevents mutating a property.
+`*readonly*` vs `*const*`?:: `const` prevents reassigning a variable. `readonly` prevents mutating a property.
 What are type assertions?:: `value as Type`` overrides the compiler. It doesn’t convert anything, so use it sparingly.
 Optional chaining and nullish coalescing?:: `a?.b` and `a ?? "default"` (unlike `||`, `??` only triggers on null/undefined).
